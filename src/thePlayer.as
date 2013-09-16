@@ -16,7 +16,7 @@ package
 		private var ySpeed:Number=0;
 		private var onTheGround:Boolean=false;
 		private var gravity:Number=0.45;
-		[Embed(source='assets/player.jpg')] private const PLAYER:Class;
+		[Embed(source='../assets/player.jpg')] private const PLAYER:Class;
 		
 		public function thePlayer()
 		{
