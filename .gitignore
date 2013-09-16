@@ -1,2 +1,7 @@
 /*.as3proj
 /bin
+/bin-debug
+/html-template
+.actionScriptProperties
+
+.project
