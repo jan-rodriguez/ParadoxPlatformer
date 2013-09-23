@@ -11,15 +11,15 @@ package
 				add(new theWall(i,0));
 				add(new theWall(i,14));
 			}
-			for (var i:int = 0; i<14; i++) {
-				add(new theWall(0,i));
-				add(new theWall(19,i));
+			for (var j:int = 0; j<14; j++) {
+				add(new theWall(0,j));
+				add(new theWall(19,j));
 			}
-			for (var i:int = 1; i<5; i++) {
-				add(new theWall(5-i,14-i));
-				add(new theWall(9-i, 9));
-				add(new theWall(14+i,8-i));
-				add(new theWall(9+i,8));
+			for (var k:int = 1; k<5; k++) {
+				add(new theWall(5-k,14-k));
+				add(new theWall(9-k, 9));
+				add(new theWall(14+k,8-k));
+				add(new theWall(9+k,8));
 			}
 			add(new thePlayer());
 		}
