@@ -8,6 +8,13 @@ package
 	
 	public class thePlayer extends Entity
 	{
+		private var playerPosition:Array = [];
+		private var xPosition:int = 0; 
+		private var yPosition:int = 1;
+		private var previousX:int = 0;
+		private var previousY:int = 0;
+		private var rewindState:Boolean = false;
+		
 		private var power:Number=0.4;
 		private var jumpPower:Number=10;
 		private var hFriction:Number=0.85;
@@ -27,7 +34,48 @@ package
 		}
 		
 		override public function update():void {
-			var pressed:Boolean=false;
+			var pressed:Boolean = false;
+
+			// Add position to array after each update
+			if (!Input.check(Key.SHIFT)) 
+			{
+				rewindState = false;
+				if (x == previousX && y == previousY)
+				{
+				}
+				else
+				{
+				playerPosition.push([x, y]);
+				previousX = x; 
+				previousY = y;
+				}
+			
+				
+				//trace([x, y]);
+				
+				if (rewindState == true) {
+					//Set rewind state to false 
+					rewindState = false;
+					
+					//Add new entity to world 
+					
+				
+				}
+				
+			}
+			
+			if (Input.check(Key.SHIFT)) {
+				rewindState = true;
+				//Move back to most recent position
+				if (playerPosition.length != 0){
+				x = playerPosition[playerPosition.length - 1][xPosition];
+				y = playerPosition[playerPosition.length - 1][yPosition];
+				
+				//Remove most recent position from array
+				playerPosition.pop();
+				}
+			}
+			
 			if (Input.check(Key.LEFT)) {
 				xSpeed-=power;
 				pressed=true;
