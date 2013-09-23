@@ -13,7 +13,7 @@ package
 			}
 			for (var i:int = 0; i<14; i++) {
 				add(new theWall(0,i));
-				add(new theWall(19,i));
+				add(new theSpikes(19,i));
 			}
 			for (var i:int = 1; i<5; i++) {
 				add(new theWall(5-i,14-i));
