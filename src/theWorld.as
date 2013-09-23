@@ -11,9 +11,9 @@ package
 				add(new theWall(i,0));
 				add(new theWall(i,14));
 			}
-			for (var j:int = 0; j<14; j++) {
-				add(new theWall(0,j));
-				add(new theWall(19,j));
+			for (var i:int = 0; i<14; i++) {
+				add(new theWall(0,i));
+				add(new theSpikes(19,i));
 			}
 			for (var k:int = 1; k<5; k++) {
 				add(new theWall(5-k,14-k));

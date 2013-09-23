@@ -93,6 +93,10 @@ package
 			} else {
 				ySpeed+=gravity;
 			}
+			if (collide("spikes",x,y+1)) {
+				x=32*16;
+				y=(32*13)+16;
+			}
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;
 			}
