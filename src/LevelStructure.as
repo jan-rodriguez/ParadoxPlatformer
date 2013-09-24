@@ -39,7 +39,7 @@ package
 			[1,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
 			[2,2,2,2,2,2,2,2,2,2,2,2,2,2,1]); 
 		
-		//public static const TUESArray:Array = new Array(); 
+		//public static const TUES:Array = new Array(); 
 		
 	}
 }
