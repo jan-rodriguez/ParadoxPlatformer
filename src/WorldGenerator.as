@@ -1,8 +1,13 @@
 package
-{
+{	
+	import flash.utils.Dictionary;
+
 	public class WorldGenerator
 	{
 		private var worldRep:Array;
+		
+		//this variable represents the number of random obstacles we have
+		private var randomRange:int = 1;
 		
 		public function WorldGenerator(sizeX:int, sizeY:int, rep:Array = null)
 		{
@@ -20,7 +25,28 @@ package
 		
 		public function generateRandomLevel():Array
 		{
-			return null;
+			var dic = new Dictionary();
+			var randomLevelNum = RandomNumberHelper.randomIntRange(0,1);
+			var array:Array = LevelStructure.levels[randomLevelNum];
+			for (var x:int = 0; x < array.length; x++)
+			{
+				for (var y:int = 0; y < array[x].length; y++)
+				{
+					if (array[x][y] >= 30)
+					{
+						if (dic[array[x][y]])
+						{
+							array[x][y] = dic[array[x][y]]
+						}
+						else
+						{
+							//get random obstacle
+							dic[array[x][y]] = RandomNumberHelper.randomIntRange(10,11);
+						}
+					}
+				}
+			}
+			return array;
 		}
 		
 		public function getWorldRepresentation():Array

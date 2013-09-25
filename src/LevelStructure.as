@@ -10,8 +10,10 @@ package
 		/*
 		 * Empty space = 0
 		 * Wall = 1
-		 * Spikes = 2
-		 * Random Obstacle = 7 TODO: add random obstacles
+		 * Player Start = 2
+		 * Goal = 3
+		 * Obstacle Type = 10-29
+		 * Random Obstacle = >30 TODO: add random obstacles
 		 */
 		
 		/*
@@ -37,8 +39,9 @@ package
 			[1,0,0,0,0,0,1,0,0,0,0,0,0,0,1],
 			[1,0,0,0,0,1,0,0,0,0,0,0,0,0,1],
 			[1,0,0,0,1,0,0,0,0,0,0,0,0,0,1],
-			[2,2,2,2,2,2,2,2,2,2,2,2,2,2,1]); 
+			[10,10,10,10,10,10,10,10,10,10,10,10,10,10,10]); 
 		
+		public static const levels:Array = new Array(DEFAULT);
 		//public static const TUES:Array = new Array(); 
 		
 	}
