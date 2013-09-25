@@ -68,8 +68,8 @@ package
 				rewindState = true;
 				//Move back to most recent position
 				if (playerPosition.length != 0){
-				x = playerPosition[playerPosition.length - 1][xPosition];
-				y = playerPosition[playerPosition.length - 1][yPosition];
+					x = playerPosition[playerPosition.length - 1][xPosition];
+					y = playerPosition[playerPosition.length - 1][yPosition];
 				
 				//Remove most recent position from array
 				playerPosition.pop();
