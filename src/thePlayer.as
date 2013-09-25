@@ -34,12 +34,12 @@ package
 		protected var doxSprite:Spritemap = new Spritemap(DOX_ANIM, 26, 30);
 		private var flipped:Boolean = false; // default facing is right
 		
-		public function thePlayer(currentWorld:World)
+		public function thePlayer(xPos:int, yPos:int, currentWorld:World)
 		{
 			graphic = new Image(PLAYER);
 			setHitbox(16,16);
-			x=32*16;
-			y = (32 * 13) + 16;
+			x=32*xPos;
+			y = (32 *yPos);
 			myWorld = currentWorld;
 
 			// Animation code -Nick
