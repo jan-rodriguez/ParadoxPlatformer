@@ -31,7 +31,7 @@ package
 		public function generateRandomLevel():Array
 		{
 			var dic = new Dictionary();
-			var randomLevelNum = RandomNumberHelper.randomIntRange(0,LevelStructure.numLevels);
+			var randomLevelNum = RandomNumberHelper.randomIntRange(0,LevelStructure.numLevels-1);
 			var array:Array = LevelStructure.levels[randomLevelNum];
 			for (var x:int = 0; x < array.length; x++)
 			{

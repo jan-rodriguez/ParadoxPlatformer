@@ -104,6 +104,8 @@ package
 			} else if (collide("goal", x, y + 1)) {
 				x = 32;
 				y = 32;
+				trace("hit goal");
+				theWorld(myWorld).reset();
 			}
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;

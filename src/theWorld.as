@@ -7,10 +7,15 @@ package
 	{
 		//obstacle types
 		public static const SPIKES:int = 10;
+		private var wg:WorldGenerator;
 		
 		public function theWorld()
 		{
-			var wg:WorldGenerator = new WorldGenerator(0,0);
+			wg = new WorldGenerator(0,0);
+			createWorld();
+		}
+		private function createWorld()
+		{
 			var worldRep:Array = wg.generateRandomLevel();
 			trace(worldRep);
 			for (var x:int = 0; x < worldRep.length; x++)
@@ -35,7 +40,12 @@ package
 				}
 			}
 			add(new thePlayer(this));
-
+		}
+		public function reset()
+		{
+			trace("reseting world");
+			removeAll();
+			createWorld();
 		}
 	}
 }
