@@ -2,6 +2,7 @@ package
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
+	import net.flashpunk.World;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input;
@@ -10,6 +11,7 @@ package
 	public class thePlayer extends Entity
 	{
 		private var playerPosition:Array = [];
+		private var clonePath:Array = [];
 		private var xPosition:int = 0; 
 		private var yPosition:int = 1;
 		private var previousX:int = 0;
@@ -23,21 +25,23 @@ package
 		private var xSpeed:Number=0;
 		private var ySpeed:Number=0;
 		private var onTheGround:Boolean=false;
-		private var gravity:Number=0.45;
+		private var gravity:Number = 0.45;
+		private var myWorld:World;
 		[Embed(source = '../assets/player.jpg')] private const PLAYER:Class;
-		
+
 		// Dox sprites (for animation) and other variables for animation
 		[Embed(source = '../assets/dox.png')] private const DOX_ANIM:Class;
 		protected var doxSprite:Spritemap = new Spritemap(DOX_ANIM, 26, 30);
 		private var flipped:Boolean = false; // default facing is right
 		
-		public function thePlayer()
+		public function thePlayer(currentWorld:World)
 		{
 			graphic = new Image(PLAYER);
 			setHitbox(16,16);
 			x=32*16;
 			y = (32 * 13) + 16;
-			
+			myWorld = currentWorld;
+
 			// Animation code -Nick
 			doxSprite = new Spritemap(DOX_ANIM, 26, 30);
 			doxSprite.originX = 4;
@@ -54,9 +58,9 @@ package
 			// Add position to array after each update
 			if (!Input.check(Key.SHIFT)) 
 			{
-				rewindState = false;
 				if (x == previousX && y == previousY)
 				{
+					//Do nothing
 				}
 				else
 				{
@@ -64,17 +68,18 @@ package
 				previousX = x; 
 				previousY = y;
 				}
-				
-				//trace([x, y]);
-				
+							
 				if (rewindState == true) {
 					//Set rewind state to false 
 					rewindState = false;
 					
-					//Add new entity to world 
+					//Add new clone to world and give it path to follow
+					myWorld.add(new theClone(x, y, clonePath));
 					
-				
+					//Reset clonePath for next clone
+					clonePath = []
 				}
+				rewindState = false;	
 				
 			}
 			
@@ -82,11 +87,11 @@ package
 				rewindState = true;
 				//Move back to most recent position
 				if (playerPosition.length != 0){
-				x = playerPosition[playerPosition.length - 1][xPosition];
-				y = playerPosition[playerPosition.length - 1][yPosition];
+					x = playerPosition[playerPosition.length - 1][xPosition];
+					y = playerPosition[playerPosition.length - 1][yPosition];
 				
 				//Remove most recent position from array
-				playerPosition.pop();
+				clonePath.unshift(playerPosition.pop());
 				}
 			}
 			
@@ -115,6 +120,11 @@ package
 			if (collide("spikes",x,y+1)) {
 				x=32*16;
 				y=(32*13)+16;
+			} else if (collide("goal", x, y + 1)) {
+				x = 32;
+				y = 32;
+				trace("hit goal");
+				theWorld(myWorld).reset();
 			}
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;
