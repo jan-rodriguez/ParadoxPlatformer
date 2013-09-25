@@ -22,11 +22,11 @@ package
 		private var onTheGround:Boolean=false;
 		private var gravity:Number = 0.45;
 		private var myWorld:World;
-		[Embed(source = '../assets/player.jpg')] private const PLAYER:Class;
+		[Embed(source = '../assets/whitesquare.jpg')] private const CLONE:Class;
 		
 		public function theClone(xPosition:int , yPosition:int, clonePath:Array)
 		{
-			graphic = new Image(PLAYER);
+			graphic = new Image(CLONE);
 			setHitbox(16, 16);
 			x = xPosition;
 			y = yPosition;
