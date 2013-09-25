@@ -25,12 +25,12 @@ package
 		private var gravity:Number=0.45;
 		[Embed(source='../assets/player.jpg')] private const PLAYER:Class;
 		
-		public function thePlayer()
+		public function thePlayer(posX:int,posY:int)
 		{
 			graphic = new Image(PLAYER);
 			setHitbox(16,16);
-			x=32*16;
-			y=(32*13)+16;
+			x=32*posX;
+			y=(32*posY)+16;
 		}
 		
 		override public function update():void {
