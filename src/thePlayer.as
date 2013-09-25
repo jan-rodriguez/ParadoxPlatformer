@@ -37,15 +37,17 @@ package
 		public function thePlayer(currentWorld:World)
 		{
 			graphic = new Image(PLAYER);
-			setHitbox(16,16);
+			setHitbox(16, 24);
 			x=32*16;
-			y = (32 * 13) + 16;
+			y = (32 * 13) + 8;
 			myWorld = currentWorld;
+			
+			layer = 1000;
 
 			// Animation code -Nick
 			doxSprite = new Spritemap(DOX_ANIM, 26, 30);
 			doxSprite.originX = 4;
-			doxSprite.originY = 14;
+			doxSprite.originY = 6;
 			graphic = doxSprite;
 			doxSprite.add("idle", [0], 24);
 			doxSprite.add("jumping", [1], 24);
@@ -119,7 +121,7 @@ package
 			}
 			if (collide("spikes",x,y+1)) {
 				x=32*16;
-				y=(32*13)+16;
+				y=(32*13)+8;
 			} else if (collide("goal", x, y + 1)) {
 				x = 32;
 				y = 32;
