@@ -5,10 +5,14 @@ package
 	
 	public class theWorld extends World
 	{
+		//obstacle types
+		public static const SPIKES:int = 10;
+		
 		public function theWorld()
 		{
 			var wg:WorldGenerator = new WorldGenerator(0,0);
-			var worldRep:Array = wg.getGapLevel();
+			var worldRep:Array = wg.generateRandomLevel();
+			trace(worldRep);
 			for (var x:int = 0; x < worldRep.length; x++)
 			{
 				for (var y:int = 0; y < worldRep[x].length; y++)
@@ -19,7 +23,7 @@ package
 						case 1: 
 							add(new theWall(x,y));
 							break;
-						case 2:
+						case SPIKES:
 							add(new theSpikes(x,y));
 							break;
 						case 3:
