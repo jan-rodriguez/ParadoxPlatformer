@@ -34,12 +34,12 @@ package
 		protected var doxSprite:Spritemap = new Spritemap(DOX_ANIM, 26, 30);
 		private var flipped:Boolean = false; // default facing is right
 		
-		public function thePlayer(currentWorld:World)
+		public function thePlayer(xPos:int, yPos:int, currentWorld:World)
 		{
 			graphic = new Image(PLAYER);
 			setHitbox(16, 24);
-			x=32*16;
-			y = (32 * 13) + 8;
+			x=32*xPos;
+			y = (32 *yPos);
 			myWorld = currentWorld;
 			
 			layer = 1000;
@@ -120,8 +120,8 @@ package
 				ySpeed+=gravity;
 			}
 			if (collide("spikes",x,y+1)) {
-				x=32*16;
-				y=(32*13)+8;
+				x=32*xPos;
+				y=(32*yPos);
 			} else if (collide("goal", x, y + 1)) {
 				x = 32;
 				y = 32;

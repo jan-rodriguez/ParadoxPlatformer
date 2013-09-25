@@ -28,6 +28,8 @@ package
 						case 1: 
 							add(new theWall(x,y));
 							break;
+						case 2:
+							add(new thePlayer(x, y, this));
 						case SPIKES:
 							add(new theSpikes(x,y));
 							break;
@@ -39,7 +41,7 @@ package
 					}
 				}
 			}
-			add(new thePlayer(this));
+			//add(new thePlayer(this));
 		}
 		public function reset()
 		{
