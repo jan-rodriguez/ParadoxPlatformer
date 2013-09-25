@@ -35,6 +35,7 @@ package
 			x=32*16;
 			y = (32 * 13) + 16;
 			myWorld = currentWorld;
+
 		}
 		
 		override public function update():void {
@@ -72,8 +73,8 @@ package
 				rewindState = true;
 				//Move back to most recent position
 				if (playerPosition.length != 0){
-				x = playerPosition[playerPosition.length - 1][xPosition];
-				y = playerPosition[playerPosition.length - 1][yPosition];
+					x = playerPosition[playerPosition.length - 1][xPosition];
+					y = playerPosition[playerPosition.length - 1][yPosition];
 				
 				//Remove most recent position from array
 				clonePath.unshift(playerPosition.pop());
@@ -100,6 +101,9 @@ package
 			if (collide("spikes",x,y+1)) {
 				x=32*16;
 				y=(32*13)+16;
+			} else if (collide("goal", x, y + 1)) {
+				x = 32;
+				y = 32;
 			}
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;

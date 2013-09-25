@@ -7,10 +7,30 @@ package
 	{
 		public function theWorld()
 		{
-			for (var i:int = 0; i<20; i++) {
-				add(new theWall(i,0));
-				add(new theWall(i,14));
+			var wg:WorldGenerator = new WorldGenerator(0,0);
+			var worldRep:Array = wg.getGapLevel();
+			for (var x:int = 0; x < worldRep.length; x++)
+			{
+				for (var y:int = 0; y < worldRep[x].length; y++)
+				{
+					var cellType:int = worldRep[x][y];
+					switch(cellType)
+					{
+						case 1: 
+							add(new theWall(x,y));
+							break;
+						case 2:
+							add(new theSpikes(x,y));
+							break;
+						case 3:
+							add(new theGoal(x, y));
+							break;
+						default:
+							break;
+					}
+				}
 			}
+
 			for (var i:int = 0; i<14; i++) {
 				add(new theWall(0,i));
 				add(new theSpikes(19,i));
@@ -22,6 +42,7 @@ package
 				add(new theWall(9+k,8));
 			}
 			add(new thePlayer(this));
+
 		}
 	}
 }
