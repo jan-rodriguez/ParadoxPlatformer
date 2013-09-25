@@ -18,6 +18,11 @@ package
 			return LevelStructure.DEFAULT;
 		}
 		
+		public function getGapLevel():Array
+		{
+			return LevelStructure.GAPLEVEL;
+		}
+		
 		public function generateRandomLevel():Array
 		{
 			return null;
