@@ -2,6 +2,7 @@ package
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
+	import net.flashpunk.World;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
@@ -9,6 +10,7 @@ package
 	public class thePlayer extends Entity
 	{
 		private var playerPosition:Array = [];
+		private var clonePath:Array = [];
 		private var xPosition:int = 0; 
 		private var yPosition:int = 1;
 		private var previousX:int = 0;
@@ -22,15 +24,17 @@ package
 		private var xSpeed:Number=0;
 		private var ySpeed:Number=0;
 		private var onTheGround:Boolean=false;
-		private var gravity:Number=0.45;
+		private var gravity:Number = 0.45;
+		private var myWorld:World;
 		[Embed(source='../assets/player.jpg')] private const PLAYER:Class;
 		
-		public function thePlayer()
+		public function thePlayer(currentWorld:World)
 		{
 			graphic = new Image(PLAYER);
 			setHitbox(16,16);
 			x=32*16;
-			y=(32*13)+16;
+			y = (32 * 13) + 16;
+			myWorld = currentWorld;
 		}
 		
 		override public function update():void {
@@ -39,9 +43,9 @@ package
 			// Add position to array after each update
 			if (!Input.check(Key.SHIFT)) 
 			{
-				rewindState = false;
 				if (x == previousX && y == previousY)
 				{
+					//Do nothing
 				}
 				else
 				{
@@ -49,18 +53,18 @@ package
 				previousX = x; 
 				previousY = y;
 				}
-			
-				
-				//trace([x, y]);
-				
+							
 				if (rewindState == true) {
 					//Set rewind state to false 
 					rewindState = false;
 					
-					//Add new entity to world 
+					//Add new clone to world and give it path to follow
+					myWorld.add(new theClone(x, y, clonePath));
 					
-				
+					//Reset clonePath for next clone
+					clonePath = []
 				}
+				rewindState = false;	
 				
 			}
 			
@@ -72,7 +76,7 @@ package
 				y = playerPosition[playerPosition.length - 1][yPosition];
 				
 				//Remove most recent position from array
-				playerPosition.pop();
+				clonePath.unshift(playerPosition.pop());
 				}
 			}
 			

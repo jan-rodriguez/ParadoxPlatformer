@@ -21,7 +21,7 @@ package
 				add(new theWall(14+k,8-k));
 				add(new theWall(9+k,8));
 			}
-			add(new thePlayer());
+			add(new thePlayer(this));
 		}
 	}
 }
