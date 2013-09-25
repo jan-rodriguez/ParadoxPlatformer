@@ -64,7 +64,6 @@ package
 				previousX = x; 
 				previousY = y;
 				}
-			
 				
 				//trace([x, y]);
 				
@@ -125,7 +124,7 @@ package
 			adjustXPosition();
 			adjustYPosition();
 			
-			// Animation -Nick
+			// Animation code -Nick
 			doxSprite.flipped = flipped;
 			if (!onTheGround) {
 				doxSprite.play("jumping");
