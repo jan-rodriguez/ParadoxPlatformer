@@ -30,6 +30,7 @@ package
 							break;
 						case 2:
 							add(new thePlayer(x, y, this));
+							break;
 						case SPIKES:
 							add(new theSpikes(x,y));
 							break;

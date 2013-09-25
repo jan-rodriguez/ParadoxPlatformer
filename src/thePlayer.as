@@ -16,6 +16,8 @@ package
 		private var yPosition:int = 1;
 		private var previousX:int = 0;
 		private var previousY:int = 0;
+		private var spawnX:int = 0;
+		private var spawnY:int = 0;
 		private var rewindState:Boolean = false;
 		
 		private var power:Number=0.4;
@@ -40,6 +42,9 @@ package
 			setHitbox(16, 24);
 			x=32*xPos;
 			y = (32 *yPos);
+			spawnX = xPos;
+			spawnY = yPos;
+			
 			myWorld = currentWorld;
 			
 			layer = 1000;
@@ -120,8 +125,8 @@ package
 				ySpeed+=gravity;
 			}
 			if (collide("spikes",x,y+1)) {
-				x=32*xPos;
-				y=(32*yPos);
+				x=spawnX * 32;
+				y=spawnY * 32;
 			} else if (collide("goal", x, y + 1)) {
 				x = 32;
 				y = 32;
