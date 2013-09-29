@@ -22,7 +22,7 @@ package
 		}
 		private function createWorld()
 		{
-			var worldRep:Array = wg.getGapLevel();
+			var worldRep:Array = wg.generateRandomLevel();
 			trace(worldRep);
 			for (var x:int = 0; x < worldRep.length; x++)
 			{
