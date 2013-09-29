@@ -105,7 +105,7 @@ package
 					}
 				}
 			}
-			//add(new thePlayer(this));
+			add(new TimeBar());
 		}
 	}
 }
