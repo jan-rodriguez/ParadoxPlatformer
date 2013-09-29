@@ -1,12 +1,14 @@
 package 
 {
 	import net.flashpunk.World;
+	import net.flashpunk.Sfx;
 	
 	
 	public class theWorld extends World
 	{
 		//obstacle types
 		public static const GOAL:int = 3;
+		public static const SWITCH:int = 5;
 		public static const SPIKES:int = 10;
 		public static const RIGHT_TURRET:int = 11;
 		public static const LEFT_TURRET:int = 12;
@@ -16,12 +18,16 @@ package
 		
 		private var wg:WorldGenerator;
 		
+		[Embed(source = '../assets/music/epic_background.mp3')] private const LEVELMUSIC:Class;
+		private var sfxLevelMusic:Sfx = new Sfx(LEVELMUSIC); 
+		
 		public function theWorld()
 		{
-			wg = new WorldGenerator(0,0);
+			wg = new WorldGenerator(0, 0);
+			sfxLevelMusic.loop();
 			createWorld();
 		}
-		private function createWorld()
+		private function createWorld():void
 		{
 			var worldRep:Array = wg.generateRandomLevel();
 			trace(worldRep);
@@ -40,6 +46,9 @@ package
 							break;
 						case SPIKES:
 							add(new theSpikes(x,y));
+							break;
+						case SWITCH:
+							add(new theSwitch(x, y));
 							break;
 						case GOAL:
 							add(new theGoal(x, y));
@@ -63,7 +72,7 @@ package
 			}
 			//add(new thePlayer(this));
 		}
-		public function reset()
+		public function reset():void
 		{
 			trace("reseting world");
 			removeAll();
