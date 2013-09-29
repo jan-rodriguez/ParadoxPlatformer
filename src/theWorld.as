@@ -18,7 +18,7 @@ package
 		public static const UP_TURRET:int = 13;
 		public static const DOWN_TURRET:int = 14;
 		
-		
+		private var finalLevel:Boolean = false;
 		private var wg:WorldGenerator;
 		private var level:Array;
 		
@@ -34,8 +34,20 @@ package
 		}
 		private function createWorld():void
 		{
-			level = wg.generateRandomLevel();
-			generateWorld(level);
+			if (finalLevel)
+			{
+				FP.world = new WinningScreen();
+			}
+			else if (LevelStructure.getNumLevels())
+			{
+				level = wg.generateRandomLevel();
+				generateWorld(level);
+			}
+			else
+			{
+				finalLevel = true;
+				generateWorld(LevelStructure.FINALLEVEL);
+			}
 		}
 		override public function update():void
 		{
