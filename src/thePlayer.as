@@ -13,6 +13,8 @@ package
 	{
 		private var playerPosition:Array = [];
 		private var clonePath:Array = [];
+		private var cloneCount = 0;
+		private var clones:Array = []
 		private var xPosition:int = 0; 
 		private var yPosition:int = 1;
 		private var previousX:int = 0;
@@ -20,6 +22,7 @@ package
 		private var spawnX:int = 0;
 		private var spawnY:int = 0;
 		private var rewindState:Boolean = false;
+		
 		
 		private var power:Number=0.4;
 		private var jumpPower:Number=10;
@@ -96,10 +99,22 @@ package
 					sfxReverseFinish.play();
 					//Set rewind state to false 
 					rewindState = false;
-					
+				var clone:theClone = new theClone(x, y, clonePath, myWorld);
+				if (cloneCount < 10) {
 					//Add new clone to world and give it path to follow
-					myWorld.add(new theClone(x, y, clonePath));
+					myWorld.add(clone);
+					clones.push(clone);
+					cloneCount += 1
+				}	
+				else {
+					//Pop oldest clone
+					var removedClone = clones.shift();
+					myWorld.remove(removedClone);
 					
+					//Add new clone
+					myWorld.add(clone); 
+					clones.push(clone);
+				}
 					//Reset clonePath for next clone
 					clonePath = []
 				}
@@ -113,13 +128,18 @@ package
 					time = 0;
 				}
 				rewindState = true;
+				//Add images to create visible path during time travel
+				var pathEntity:theRewindEntity = new theRewindEntity(x, y);
+				//myWorld.add(pathEntity);
+				
 				//Move back to most recent position
 				if (playerPosition.length != 0){
 					x = playerPosition[playerPosition.length - 1][xPosition];
 					y = playerPosition[playerPosition.length - 1][yPosition];
 				
-				//Remove most recent position from array
-				clonePath.unshift(playerPosition.pop());
+				//Remove most recent position from array and add position and new rewindEntity to path
+				var position:Array = playerPosition.pop();
+				clonePath.unshift([position[xPosition], position[yPosition], pathEntity]);
 				}
 			}
 			
@@ -135,7 +155,6 @@ package
 				flipped = false; // for animation
 				doxSprite.originX = 4; // animation
 			}
-			
 			if (collide("wall",x,y+1)) {
 				onTheGround=true;
 				ySpeed=0;
@@ -148,13 +167,14 @@ package
 				ySpeed+=gravity;
 			}
 			
-			//Entity Collisions
+			//Entity Collisions			
+			var clone:theClone;
 			var bullet:Entity;
 			if (collide("spikes",x,y+1)) {
-				x=spawnX * 32;
-				y = spawnY * 32;
+				dieeeee();
 				sfxDeath.play();
 			} 
+			
 			else if (collide("goal", x, y + 1)) {
 				x = 32;
 				y = 32;
@@ -163,10 +183,26 @@ package
 			}
 			else if ( bullet = collide("bullet", x, y+1))
 			{
-				x=spawnX * 32;
-				y = spawnY * 32;
+				dieeeee();	
 				sfxDeath.play();
 				FP.world.remove(bullet);
+			}
+			else if (clone = collide("clone", x, y + 1) as theClone)
+			{
+				
+				if (clone.getVelocity()[0] == 0 && clone.getVelocity()[1] == 0) 
+				{
+					onTheGround = true; 
+					ySpeed = 0;
+					if (Input.check(Key.UP)) 
+					{
+						ySpeed-=jumpPower;
+					}
+					
+				}
+				
+				//TODO: Add handler for getting crushed between clone and another immovable object
+				
 			}
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;
@@ -195,7 +231,7 @@ package
 		
 		private function adjustXPosition():void {
 			for (var i:int=0; i<Math.abs(xSpeed); i++) {
-				if (! collide("wall",x+FP.sign(xSpeed),y)) {
+				if (!(collide("wall",x+FP.sign(xSpeed),y)) ) {
 					x+=FP.sign(xSpeed);
 				} else {
 					xSpeed=0;
@@ -206,7 +242,7 @@ package
 		
 		private function adjustYPosition():void {
 			for (var i:int=0; i<Math.abs(ySpeed); i++) {
-				if (! collide("wall",x,y+FP.sign(ySpeed))) {
+				if (!(collide("wall",x,y+FP.sign(ySpeed)))) {
 					y+=FP.sign(ySpeed);
 				} else {
 					ySpeed=0;
@@ -214,5 +250,12 @@ package
 				}
 			}
 		}
+		
+		private function dieeeee():void {
+			x = spawnX * 32; 
+			y = spawnY * 32; 
+			playerPosition = [];
+		}
+		
 	}
 }
