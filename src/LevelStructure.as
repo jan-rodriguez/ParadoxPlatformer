@@ -92,7 +92,7 @@ package
 			[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]		
 		);
 		
-		public static const levels:Array = new Array(/*DEFAULT,GAPLEVEL,*/RANDOMTESTLEVEL);
+		public static const levels:Array = new Array(DEFAULT,GAPLEVEL/*RANDOMTESTLEVEL*/);
 		public static const numLevels:int = levels.length;
 	}
 }
