@@ -1,11 +1,12 @@
 package 
 {
+	import flash.utils.ByteArray;
+	
 	import net.flashpunk.FP;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
-	
 	
 	public class theWorld extends World
 	{
@@ -28,6 +29,7 @@ package
 		
 		public function theWorld()
 		{
+			LevelStructure.levels = clone(LevelStructure.ALL_LEVELS);
 			wg = new WorldGenerator(0, 0);
 			sfxLevelMusic.loop();
 			createWorld();
@@ -119,6 +121,14 @@ package
 				}
 			}
 			add(new TimeBar());
+		}
+		
+		public function clone(source:Object):* 
+		{ 
+			var myBA:ByteArray = new ByteArray(); 
+			myBA.writeObject(source); 
+			myBA.position = 0; 
+			return(myBA.readObject()); 
 		}
 	}
 }

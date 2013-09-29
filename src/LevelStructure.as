@@ -5,6 +5,7 @@ package
 		that the WorldGenerator class can use read and fill in with
 		random constructs. 
 	*/
+	import flash.utils.ByteArray;
 	public final class LevelStructure
 	{
 		/*
@@ -137,12 +138,20 @@ package
 			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
 			[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 		);
-		
-		public static const levels:Array = new Array(DEFAULT,GAPLEVEL,/*RANDOMTESTLEVEL,*/ BULLETBLOCKTEST);
+		public static const ALL_LEVELS:Array = new Array(DEFAULT,GAPLEVEL,/*RANDOMTESTLEVEL,*/ BULLETBLOCKTEST);
+		public static var levels:Array = new Array(DEFAULT,GAPLEVEL,/*RANDOMTESTLEVEL,*/ BULLETBLOCKTEST);
 		
 		public static function getNumLevels():int
 		{
 			return levels.length;
+		}
+		
+		public function clone(source:Object):* 
+		{ 
+			var myBA:ByteArray = new ByteArray(); 
+			myBA.writeObject(source); 
+			myBA.position = 0; 
+			return(myBA.readObject()); 
 		}
 	}
 }
