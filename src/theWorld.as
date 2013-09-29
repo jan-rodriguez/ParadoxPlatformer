@@ -1,6 +1,7 @@
 package 
 {
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Image;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
 	import net.flashpunk.utils.Input;
@@ -23,8 +24,10 @@ package
 		private var level:Array;
 		
 		[Embed(source = '../assets/music/snappy_lo.mp3')] private static const LEVELMUSIC:Class;
-		public static var sfxLevelMusic:Sfx = new Sfx(LEVELMUSIC); 
-
+		public static var sfxLevelMusic:Sfx = new Sfx(LEVELMUSIC);
+		
+		// Level background
+		[Embed(source='../assets/images/background.png')] private const BACKGROUND:Class;
 		
 		public function theWorld()
 		{
@@ -34,6 +37,7 @@ package
 		}
 		private function createWorld():void
 		{
+			addGraphic(new Image(BACKGROUND), 2000, 0, 0);
 			level = wg.generateRandomLevel();
 			generateWorld(level);
 		}
