@@ -4,6 +4,7 @@ package
 	import net.flashpunk.FP;
 	import net.flashpunk.World;
 	import net.flashpunk.graphics.Image;
+	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	/**
@@ -24,14 +25,37 @@ package
 		private var myWorld:World;
 		[Embed(source = '../assets/whitesquare.jpg')] private const CLONE:Class;
 		
+		// Dox sprites (for animation) and other variables for animation
+		[Embed(source = '../assets/doxClone.png')] private const CLONE_ANIM:Class;
+		protected var cloneSprite:Spritemap = new Spritemap(CLONE_ANIM, 26, 30);
+		private var flipped:Boolean = false; // default facing is right
+		
+		public static var numClones = 0;
+		
 		public function theClone(xPosition:int , yPosition:int, clonePath:Array)
 		{
 			graphic = new Image(CLONE);
-			setHitbox(16, 16);
+			setHitbox(16, 24);
 			x = xPosition;
 			y = yPosition;
 			path = clonePath;
 			type = "wall"; //TODO: This is a temporary assignment
+			
+			// Draw order
+			numClones++;
+			layer = numClones;
+			
+			// Animation code -Nick
+			cloneSprite = new Spritemap(CLONE_ANIM, 26, 30);
+			cloneSprite.originX = 4;
+			cloneSprite.originY = 6;
+			cloneSprite.color = 0xFFFFFF;
+			cloneSprite.tintMode = Image.TINTING_COLORIZE;
+			cloneSprite.tinting = 0.05 * numClones;
+			graphic = cloneSprite;
+			cloneSprite.add("idle", [0], 24);
+			cloneSprite.add("jumping", [1], 24);
+			cloneSprite.add("running", [2, 3, 4, 5, 6, 7], 16);
 			
 		}
 		
@@ -65,6 +89,18 @@ package
 			ySpeed*=vFriction;
 			adjustXPosition();
 			adjustYPosition();
+			
+			// Animation code -Nick
+			cloneSprite.flipped = flipped;
+			if (!onTheGround) {
+				cloneSprite.play("jumping");
+			}
+			else if (xSpeed > 1) {
+				cloneSprite.play("running");
+			}
+			else {
+				cloneSprite.play("idle");
+			}
 		}
 		
 		private function adjustXPosition():void {

@@ -16,6 +16,8 @@ package
 		private var yPosition:int = 1;
 		private var previousX:int = 0;
 		private var previousY:int = 0;
+		private var spawnX:int = 0;
+		private var spawnY:int = 0;
 		private var rewindState:Boolean = false;
 		
 		private var power:Number=0.4;
@@ -37,15 +39,21 @@ package
 		public function thePlayer(xPos:int, yPos:int, currentWorld:World)
 		{
 			graphic = new Image(PLAYER);
-			setHitbox(16,16);
+			setHitbox(16, 24);
 			x=32*xPos;
 			y = (32 *yPos);
+			spawnX = xPos;
+			spawnY = yPos;
+			type = "player";
+			
 			myWorld = currentWorld;
+			
+			layer = 1000;
 
 			// Animation code -Nick
 			doxSprite = new Spritemap(DOX_ANIM, 26, 30);
 			doxSprite.originX = 4;
-			doxSprite.originY = 14;
+			doxSprite.originY = 6;
 			graphic = doxSprite;
 			doxSprite.add("idle", [0], 24);
 			doxSprite.add("jumping", [1], 24);
@@ -117,14 +125,24 @@ package
 				onTheGround = false;
 				ySpeed+=gravity;
 			}
+			
+			//Entity Collisions
+			var bullet;
 			if (collide("spikes",x,y+1)) {
-				x=32*16;
-				y=(32*13)+16;
-			} else if (collide("goal", x, y + 1)) {
+				x=spawnX * 32;
+				y=spawnY * 32;
+			} 
+			else if (collide("goal", x, y + 1)) {
 				x = 32;
 				y = 32;
 				trace("hit goal");
 				theWorld(myWorld).reset();
+			}
+			else if ( bullet = collide("bullet", x, y+1))
+			{
+				x=spawnX * 32;
+				y=spawnY * 32;
+				FP.world.remove(bullet);
 			}
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;

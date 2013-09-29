@@ -13,6 +13,10 @@ package
 		 * Player Start = 2
 		 * Goal = 3
 		 * Obstacle Type = 10-29
+		 * 		- right facing turret: 11
+		 * 		- left facing turret: 12
+		 * 		- up facing turret: 13
+		 * 		- down facing turret: 14
 		 * Random Obstacle = >30 TODO: add random obstacles
 		 */
 		
@@ -64,7 +68,31 @@ package
 			[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]		
 		);
 		
-		public static const levels:Array = new Array(DEFAULT,GAPLEVEL);
+		//Test Level for random levels
+		public static const RANDOMTESTLEVEL:Array = new Array(
+			[1,1,1,1,1,1,1,1,1,1,1,1,1,3,1],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 35, 0, 35, 0, 35, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 34, 0, 34, 0, 34, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 33, 0, 33, 0, 33, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 32, 0, 32, 0, 32, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 31, 0, 31, 0, 31, 0, 0, 0, 0, 0, 10],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1],
+			[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]		
+		);
+		
+		public static const levels:Array = new Array(DEFAULT,GAPLEVEL/*RANDOMTESTLEVEL*/);
 		public static const numLevels:int = levels.length;
 	}
 }

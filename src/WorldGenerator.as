@@ -1,5 +1,6 @@
 package
 {	
+	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
 
 	public class WorldGenerator
@@ -32,7 +33,7 @@ package
 		{
 			var dic = new Dictionary();
 			var randomLevelNum = RandomNumberHelper.randomIntRange(0,LevelStructure.numLevels-1);
-			var array:Array = LevelStructure.levels[randomLevelNum];
+			var array:Array = clone(LevelStructure.levels[randomLevelNum]);
 			for (var x:int = 0; x < array.length; x++)
 			{
 				for (var y:int = 0; y < array[x].length; y++)
@@ -46,12 +47,22 @@ package
 						else
 						{
 							//get random obstacle
-							dic[array[x][y]] = RandomNumberHelper.randomIntRange(10,11);
+							dic[array[x][y]] = RandomNumberHelper.randomIntRange(10,14);
+							array[x][y] = dic[array[x][y]]
 						}
 					}
 				}
 			}
+			
 			return array;
+		}
+		
+		public function clone(source:Object):* 
+		{ 
+			var myBA:ByteArray = new ByteArray(); 
+			myBA.writeObject(source); 
+			myBA.position = 0; 
+			return(myBA.readObject()); 
 		}
 		
 		public function getWorldRepresentation():Array
