@@ -2,6 +2,7 @@ package
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
@@ -32,10 +33,21 @@ package
 		private var onTheGround:Boolean=false;
 		private var gravity:Number = 0.45;
 		private var myWorld:World;
-		[Embed(source = '../assets/player.jpg')] private const PLAYER:Class;
+		[Embed(source = '../assets/images/player.jpg')] private const PLAYER:Class;
+		
+		//WAV files used for player movments
+		[Embed(source = '../assets/soundfx/jumpsound.mp3')] private const JUMPSOUND:Class;
+		private var sfxJump:Sfx = new Sfx(JUMPSOUND);
+		[Embed(source = '../assets/soundfx/deathsound.mp3')] private const DEATHSOUND:Class;
+		private var sfxDeath:Sfx = new Sfx(DEATHSOUND);
+		[Embed(source = '../assets/soundfx/reversefinish.mp3')] private const REVERSEFINISH:Class;
+		private var sfxReverseFinish:Sfx = new Sfx(REVERSEFINISH);
+		
+		public static var time:Number;
+		public static const TIME_WARP_LIMIT:int = 2; 
 
 		// Dox sprites (for animation) and other variables for animation
-		[Embed(source = '../assets/dox.png')] private const DOX_ANIM:Class;
+		[Embed(source = '../assets/images/dox.png')] private const DOX_ANIM:Class;
 		protected var doxSprite:Spritemap = new Spritemap(DOX_ANIM, 26, 30);
 		private var flipped:Boolean = false; // default facing is right
 		
@@ -52,6 +64,8 @@ package
 			myWorld = currentWorld;
 			
 			layer = 1000;
+			
+			time = 0;
 
 			// Animation code -Nick
 			doxSprite = new Spritemap(DOX_ANIM, 26, 30);
@@ -65,9 +79,10 @@ package
 		
 		override public function update():void {
 			var pressed:Boolean = false;
+			time += FP.elapsed;
 
 			// Add position to array after each update
-			if (!Input.check(Key.SHIFT)) 
+			if (!Input.check(Key.SHIFT) || !rewindState) 
 			{
 				if (x == previousX && y == previousY)
 				{
@@ -81,6 +96,7 @@ package
 				}
 							
 				if (rewindState == true) {
+					sfxReverseFinish.play();
 					//Set rewind state to false 
 					rewindState = false;
 				var clone:theClone = new theClone(x, y, clonePath, myWorld);
@@ -106,7 +122,11 @@ package
 				
 			}
 			
-			if (Input.check(Key.SHIFT)) {
+			if ( rewindState || (Input.check(Key.SHIFT) && time > TIME_WARP_LIMIT)) {
+				if (!rewindState)
+				{
+					time = 0;
+				}
 				rewindState = true;
 				//Add images to create visible path during time travel
 				var pathEntity:theRewindEntity = new theRewindEntity(x, y);
@@ -135,10 +155,11 @@ package
 				flipped = false; // for animation
 				doxSprite.originX = 4; // animation
 			}
-			if (collide("wall", x, y + 1)) {
+			if (collide("wall",x,y+1)) {
 				onTheGround=true;
 				ySpeed=0;
 				if (Input.check(Key.UP)) {
+					sfxJump.play();
 					ySpeed-=jumpPower;
 				}
 			} else {
@@ -146,12 +167,14 @@ package
 				ySpeed+=gravity;
 			}
 			
-			//Entity Collisions
-			var bullet;
+			//Entity Collisions			
 			var clone:theClone;
+			var bullet:Entity;
 			if (collide("spikes",x,y+1)) {
 				dieeeee();
+				sfxDeath.play();
 			} 
+			
 			else if (collide("goal", x, y + 1)) {
 				x = 32;
 				y = 32;
@@ -160,7 +183,8 @@ package
 			}
 			else if ( bullet = collide("bullet", x, y+1))
 			{
-				dieeeee();
+				dieeeee();	
+				sfxDeath.play();
 				FP.world.remove(bullet);
 			}
 			else if (clone = collide("clone", x, y + 1) as theClone)
@@ -182,6 +206,10 @@ package
 			}
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;
+			}
+			else if (collide("switch", x, y + 1)) 
+			{
+				trace("You hit a switch");
 			}
 			xSpeed*=hFriction;
 			ySpeed*=vFriction;

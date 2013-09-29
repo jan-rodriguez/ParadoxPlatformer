@@ -14,7 +14,7 @@ package
 	 */
 	public class theRewindEntity extends Entity
 	{
-		[Embed(source = '../assets/player.jpg')] private const REWIND:Class;
+		[Embed(source = '../assets/images/player.jpg')] private const REWIND:Class;
 		public function theRewindEntity(xPosition:int , yPosition:int) 
 		{
 			graphic = new Image(REWIND);

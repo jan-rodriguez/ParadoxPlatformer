@@ -10,7 +10,7 @@ package
 	public class InstructionScreen extends World
 	{
 		public function InstructionScreen() {
-			var titleText:Text = new Text("Use the arrow keys to move and jump\n\n Press shift to rewind time and create a clone of yourself. \n(Hint: the longer you hold it down the more you travel back in time.)");
+			var titleText:Text = new Text("Use the arrow keys to move and jump\n\n Press shift to rewind time and create a clone of yourself. \n(Hint: the longer you hold it down the more you travel back in time.\n\nPress P to pause and unpause game.)");
 			var textEntity:Entity = new Entity(0,0,titleText);
 			textEntity.x = (FP.width/2)-(titleText.width/2);
 			textEntity.y = (FP.height/2)-(titleText.height/2);
@@ -26,6 +26,7 @@ package
 		override public function update():void {
 			if (Input.mouseReleased) {
 				FP.screen.color = 0x222233;
+				MainMenu.sfxBackground.stop();
 				FP.world=new theWorld();
 			}
 		}
