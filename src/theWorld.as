@@ -48,24 +48,24 @@ package
 				super.update();
 			}
 		}
-		public function reset()
+		public function reset():void
 		{
 			trace("reseting world");
 			removeAll();
 			createWorld();
 		}
-		public function restart()
+		public function restart():void
 		{
 			trace("restarting level");
 			removeAll();
 			regenerate();
 		}
-		private function regenerate()
+		private function regenerate():void
 		{
 			removeAll();
 			generateWorld(level);
 		}
-		private function generateWorld(worldRep:Array)
+		private function generateWorld(worldRep:Array):void
 		{
 			for (var x:int = 0; x < worldRep.length; x++)
 			{

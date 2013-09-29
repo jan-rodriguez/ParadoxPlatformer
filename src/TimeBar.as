@@ -18,7 +18,7 @@ package
 		{
 			super(0, 0, bar);
 			time = 0;
-			var rechargeTextEntity = new Entity(200,0,rechargeText);
+			var rechargeTextEntity:Entity = new Entity(200,0,rechargeText);
 			rechargeText.visible = true;
 			FP.world.add(rechargeTextEntity);
 			bar.clipRect.width = 200;
