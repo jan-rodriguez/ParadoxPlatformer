@@ -11,7 +11,7 @@ package
 		}
 		override public function init():void {
 			FP.screen.color = 0x222233;
-			FP.world = new theWorld();
+			FP.world = new MainMenu();
 		}
 	}
 }

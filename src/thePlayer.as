@@ -44,6 +44,7 @@ package
 			y = (32 *yPos);
 			spawnX = xPos;
 			spawnY = yPos;
+			type = "player";
 			
 			myWorld = currentWorld;
 			
@@ -124,14 +125,24 @@ package
 				onTheGround = false;
 				ySpeed+=gravity;
 			}
+			
+			//Entity Collisions
+			var bullet;
 			if (collide("spikes",x,y+1)) {
 				x=spawnX * 32;
 				y=spawnY * 32;
-			} else if (collide("goal", x, y + 1)) {
+			} 
+			else if (collide("goal", x, y + 1)) {
 				x = 32;
 				y = 32;
 				trace("hit goal");
 				theWorld(myWorld).reset();
+			}
+			else if ( bullet = collide("bullet", x, y+1))
+			{
+				x=spawnX * 32;
+				y=spawnY * 32;
+				FP.world.remove(bullet);
 			}
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;

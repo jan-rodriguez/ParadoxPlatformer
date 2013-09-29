@@ -7,6 +7,12 @@ package
 	{
 		//obstacle types
 		public static const SPIKES:int = 10;
+		public static const RIGHT_TURRET:int = 11;
+		public static const LEFT_TURRET:int = 12;
+		public static const UP_TURRET:int = 13;
+		public static const DOWN_TURRET:int = 14;
+		
+		
 		private var wg:WorldGenerator;
 		
 		public function theWorld()
@@ -16,7 +22,7 @@ package
 		}
 		private function createWorld()
 		{
-			var worldRep:Array = wg.generateRandomLevel();
+			var worldRep:Array = wg.getGapLevel();
 			trace(worldRep);
 			for (var x:int = 0; x < worldRep.length; x++)
 			{
@@ -36,6 +42,18 @@ package
 							break;
 						case 3:
 							add(new theGoal(x, y));
+							break;
+						case RIGHT_TURRET:
+							add(new theTurret(x,y));
+							break;
+						case LEFT_TURRET:
+							add(new theTurret(x,y, 180));
+							break;
+						case DOWN_TURRET:
+							add(new theTurret(x,y, 270));
+							break;
+						case UP_TURRET:
+							add(new theTurret(x,y, 90));
 							break;
 						default:
 							break;
