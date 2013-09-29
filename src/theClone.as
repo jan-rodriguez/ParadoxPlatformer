@@ -30,13 +30,14 @@ package
 		
 		public static var numClones:int = 0;
 		
-		public function theClone(xPosition:int , yPosition:int, clonePath:Array)
+		public function theClone(xPosition:int , yPosition:int, clonePath:Array, currentWorld:World)
 		{
 			setHitbox(16, 24);
 			x = xPosition;
 			y = yPosition;
 			path = clonePath;
-			type = "wall"; //TODO: This is a temporary assignment
+			myWorld = currentWorld;
+			type = "clone"; 
 			
 			// Draw order
 			numClones++;
@@ -60,25 +61,39 @@ package
 		{
 			var pressed:Boolean = false;
 			// For now, just have clone trace each position in the clonePath
+			
 			if (path.length != 0) {
 				x = path[0][0]
 				y = path[0][1]
+				
 				//TODO: Add velocities later
+				
+				//Remove rewindEntity from world
+				myWorld.remove(path[0][2]);
 				
 				//Remove positions as clone moves
 				path.shift();
 			}
 			
-			if (collide("wall",x,y+1)) {
+			if (collide("wall", x, y + 1)) {
 				onTheGround=true;
 				ySpeed=0;
-			} else {
+			} 
+			else 
+			{
 				ySpeed+=gravity;
 			}
-			if (collide("spikes",x,y+1)) {
+			if (collide("spikes", x, y + 1)) 
+			{
 				onTheGround=true;
 				ySpeed=0;
 			}
+			
+			if (collide("clone", x, y + 1)) 
+			{
+				onTheGround = true;
+				ySpeed = 0;
+			}	
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;
 			}
@@ -102,9 +117,10 @@ package
 		
 		private function adjustXPosition():void {
 			for (var i:int=0; i<Math.abs(xSpeed); i++) {
-				if (! collide("wall",x+FP.sign(xSpeed),y)) {
+				if (!(collide("wall",x+FP.sign(xSpeed),y))) {
 					x+=FP.sign(xSpeed);
 				} else {
+					trace("is this happening?");
 					xSpeed=0;
 					break;
 				}
@@ -113,7 +129,7 @@ package
 		
 		private function adjustYPosition():void {
 			for (var i:int=0; i<Math.abs(ySpeed); i++) {
-				if (! collide("wall",x,y+FP.sign(ySpeed))) {
+				if (!(collide("wall",x,y+FP.sign(ySpeed)))) {
 					y+=FP.sign(ySpeed);
 				} else {
 					ySpeed=0;
@@ -121,6 +137,12 @@ package
 				}
 			}
 		}
+		
+		public function getVelocity():Array 
+		{
+			return [this.xSpeed, this.ySpeed];
+		}
+		
 	}
 
 }
