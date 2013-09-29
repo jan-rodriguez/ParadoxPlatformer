@@ -22,19 +22,16 @@ package
 		private var ySpeed:Number=0;
 		private var onTheGround:Boolean=false;
 		private var gravity:Number = 0.45;
-		private var myWorld:World;
-		[Embed(source = '../assets/whitesquare.jpg')] private const CLONE:Class;
-		
+		private var myWorld:World;		
 		// Dox sprites (for animation) and other variables for animation
-		[Embed(source = '../assets/doxClone.png')] private const CLONE_ANIM:Class;
+		[Embed(source = '../assets/images/doxClone.png')] private const CLONE_ANIM:Class;
 		protected var cloneSprite:Spritemap = new Spritemap(CLONE_ANIM, 26, 30);
 		private var flipped:Boolean = false; // default facing is right
 		
-		public static var numClones = 0;
+		public static var numClones:int = 0;
 		
 		public function theClone(xPosition:int , yPosition:int, clonePath:Array)
 		{
-			graphic = new Image(CLONE);
 			setHitbox(16, 24);
 			x = xPosition;
 			y = yPosition;
