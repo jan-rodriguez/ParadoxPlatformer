@@ -1,6 +1,9 @@
 package 
 {
+	import net.flashpunk.FP;
 	import net.flashpunk.World;
+	import net.flashpunk.utils.Input;
+	import net.flashpunk.utils.Key;
 	import net.flashpunk.Sfx;
 	
 	
@@ -17,9 +20,11 @@ package
 		
 		
 		private var wg:WorldGenerator;
+		private var level:Array;
 		
 		[Embed(source = '../assets/music/snappy_lo.mp3')] private const LEVELMUSIC:Class;
 		private var sfxLevelMusic:Sfx = new Sfx(LEVELMUSIC); 
+
 		
 		public function theWorld()
 		{
@@ -29,8 +34,39 @@ package
 		}
 		private function createWorld():void
 		{
-			var worldRep:Array = wg.generateRandomLevel();
-			trace(worldRep);
+			level = wg.generateRandomLevel();
+			generateWorld(level);
+		}
+		override public function update():void
+		{
+			if(Input.pressed(Key.P))
+			{
+				FP.world = new PauseMenu(this);
+			}
+			else
+			{
+				super.update();
+			}
+		}
+		public function reset()
+		{
+			trace("reseting world");
+			removeAll();
+			createWorld();
+		}
+		public function restart()
+		{
+			trace("restarting level");
+			removeAll();
+			regenerate();
+		}
+		private function regenerate()
+		{
+			removeAll();
+			generateWorld(level);
+		}
+		private function generateWorld(worldRep:Array)
+		{
 			for (var x:int = 0; x < worldRep.length; x++)
 			{
 				for (var y:int = 0; y < worldRep[x].length; y++)
@@ -71,12 +107,6 @@ package
 				}
 			}
 			//add(new thePlayer(this));
-		}
-		public function reset():void
-		{
-			trace("reseting world");
-			removeAll();
-			createWorld();
 		}
 	}
 }

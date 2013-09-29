@@ -1,7 +1,8 @@
 package {
 	import net.flashpunk.Entity;
-	import net.flashpunk.World;
 	import net.flashpunk.FP;
+	import net.flashpunk.World;
+	import net.flashpunk.graphics.Text;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
 	import net.flashpunk.graphics.Text;
@@ -11,7 +12,10 @@ package {
 		[Embed(source = '../assets/music/start_up_screen_loop.mp3')] private static const BACKGROUNDMUSIC:Class;
 		public static var sfxBackground:Sfx = new Sfx(BACKGROUNDMUSIC);
 				
-		public function MainMenu() {
+		private static var firstTime:Boolean = true;
+		
+		public function MainMenu(first:Boolean = true) {
+			firstTime = first;
 			sfxBackground.loop();
 			var titleText:Text = new Text("Click to Start!");
 			var textEntity:Entity = new Entity(0,0,titleText);
@@ -28,8 +32,17 @@ package {
 		}
 		override public function update():void {
 			if (Input.mouseReleased) {
-				FP.screen.color = 0x222233;
-				FP.world = new InstructionScreen();
+				if ( firstTime )
+				{
+					FP.screen.color = 0x222233;
+					FP.world=new InstructionScreen();	
+				}
+				else
+				{
+					sfxBackground.stop();
+					FP.screen.color = 0x222233;
+					FP.world=new theWorld();	
+				}
 			}
 		}
 	}

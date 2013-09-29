@@ -94,7 +94,7 @@ package
 		
 		public static var BULLETBLOCKTEST:Array = new Array(
 			[1,1,1,1,1,1,1,3,1,1,1,1,1,1,1],
-			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 1],
+			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 1],
 			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
 			[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -115,7 +115,7 @@ package
 			[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 		);
 		
-		public static const levels:Array = new Array(/*DEFAULT,GAPLEVEL,RANDOMTESTLEVEL*/ BULLETBLOCKTEST);
+		public static const levels:Array = new Array(DEFAULT,GAPLEVEL/*,RANDOMTESTLEVEL*/, BULLETBLOCKTEST);
 		public static const numLevels:int = levels.length;
 	}
 }

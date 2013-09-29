@@ -125,6 +125,7 @@ package
 				flipped = false; // for animation
 				doxSprite.originX = 4; // animation
 			}
+			
 			if (collide("wall",x,y+1)) {
 				onTheGround=true;
 				ySpeed=0;
