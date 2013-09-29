@@ -22,8 +22,8 @@ package
 		private var wg:WorldGenerator;
 		private var level:Array;
 		
-		[Embed(source = '../assets/music/snappy_lo.mp3')] private const LEVELMUSIC:Class;
-		private var sfxLevelMusic:Sfx = new Sfx(LEVELMUSIC); 
+		[Embed(source = '../assets/music/snappy_lo.mp3')] private static const LEVELMUSIC:Class;
+		public static var sfxLevelMusic:Sfx = new Sfx(LEVELMUSIC); 
 
 		
 		public function theWorld()
