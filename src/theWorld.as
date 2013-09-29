@@ -1,10 +1,10 @@
 package 
 {
 	import net.flashpunk.FP;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
-	import net.flashpunk.Sfx;
 	
 	
 	public class theWorld extends World

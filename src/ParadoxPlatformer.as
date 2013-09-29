@@ -8,6 +8,7 @@ package
 		public function ParadoxPlatformer()
 		{
 			super(640,480,60,false);
+			//FP.console.enable();
 		}
 		override public function init():void {
 			FP.screen.color = 0x222233;

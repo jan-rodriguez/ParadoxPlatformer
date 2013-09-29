@@ -11,7 +11,7 @@ package
 		private var angle:int;
 		private var rate:int;
 		private var time:Number;
-		[Embed(source = '../assets/images/turret.png')] private const OBSTACLE:Class;
+		[Embed(source = '../assets/images/TurretSprite.png')] private const OBSTACLE:Class;
 		
 		[Embed(source = '../assets/soundfx/lazer.mp3')] private const LAZERSHOT:Class;
 		private const sfxLazerShot:Sfx = new Sfx(LAZERSHOT);
