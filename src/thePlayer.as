@@ -29,6 +29,10 @@ package
 		private var onTheGround:Boolean=false;
 		private var gravity:Number = 0.45;
 		private var myWorld:World;
+		
+		public static var time:Number;
+		public static const TIME_WARP_LIMIT:int = 2; 
+		
 		[Embed(source = '../assets/player.jpg')] private const PLAYER:Class;
 
 		// Dox sprites (for animation) and other variables for animation
@@ -49,6 +53,8 @@ package
 			myWorld = currentWorld;
 			
 			layer = 1000;
+			
+			time = 0;
 
 			// Animation code -Nick
 			doxSprite = new Spritemap(DOX_ANIM, 26, 30);
@@ -62,9 +68,10 @@ package
 		
 		override public function update():void {
 			var pressed:Boolean = false;
+			time += FP.elapsed;
 
 			// Add position to array after each update
-			if (!Input.check(Key.SHIFT)) 
+			if (!Input.check(Key.SHIFT) || !rewindState) 
 			{
 				if (x == previousX && y == previousY)
 				{
@@ -91,7 +98,11 @@ package
 				
 			}
 			
-			if (Input.check(Key.SHIFT)) {
+			if ( rewindState || (Input.check(Key.SHIFT) && time > TIME_WARP_LIMIT)) {
+				if (!rewindState)
+				{
+					time = 0;
+				}
 				rewindState = true;
 				//Move back to most recent position
 				if (playerPosition.length != 0){
