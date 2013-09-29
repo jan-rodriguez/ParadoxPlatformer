@@ -6,6 +6,7 @@ package
 	public class theWorld extends World
 	{
 		//obstacle types
+		public static const GOAL:int = 3;
 		public static const SPIKES:int = 10;
 		public static const RIGHT_TURRET:int = 11;
 		public static const LEFT_TURRET:int = 12;
@@ -40,7 +41,7 @@ package
 						case SPIKES:
 							add(new theSpikes(x,y));
 							break;
-						case 3:
+						case GOAL:
 							add(new theGoal(x, y));
 							break;
 						case RIGHT_TURRET:

@@ -14,7 +14,6 @@ package
 		
 		public function theTurret(posX:int, posY:int, turretAngle:int = 0, fireRate:int = 5)
 		{
-			trace("added turret");
 			graphic = new Image(OBSTACLE);
 			angle = turretAngle;
 			rate = fireRate;
@@ -33,7 +32,6 @@ package
 			time += FP.elapsed;
 			if ( time >= rate )
 			{
-				trace("update")
 				time = 0;
 				fire();
 			}
