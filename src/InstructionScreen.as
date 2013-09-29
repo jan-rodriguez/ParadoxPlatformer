@@ -26,6 +26,7 @@ package
 		override public function update():void {
 			if (Input.mouseReleased) {
 				FP.screen.color = 0x222233;
+				MainMenu.sfxBackground.stop();
 				FP.world=new theWorld();
 			}
 		}

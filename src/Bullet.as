@@ -10,7 +10,7 @@ package
 		private var angle:int;
 		private var xSpeed:Number=0;
 		private var ySpeed:Number=0;
-		[Embed(source = '../assets/player.jpg')] private const BULLET:Class;
+		[Embed(source = '../assets/images/player.jpg')] private const BULLET:Class;
 		
 		public function Bullet( posX:int, posY:int, launchAngle:int = 0)
 		{

@@ -38,10 +38,12 @@ package
 			}
 			if (Input.pressed(Key.N))
 			{
+				theWorld.sfxLevelMusic.stop();
 				FP.world = new MainMenu(false);
 			}
 			if (Input.pressed(Key.R))
 			{
+				MainMenu.sfxBackground.stop();	
 				FP.world = worldState;
 				worldState.restart();
 			}

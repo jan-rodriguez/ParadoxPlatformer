@@ -2,6 +2,7 @@ package
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
+	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.graphics.Spritemap;
@@ -29,10 +30,18 @@ package
 		private var onTheGround:Boolean=false;
 		private var gravity:Number = 0.45;
 		private var myWorld:World;
-		[Embed(source = '../assets/player.jpg')] private const PLAYER:Class;
+		[Embed(source = '../assets/images/player.jpg')] private const PLAYER:Class;
+		
+		//WAV files used for player movments
+		[Embed(source = '../assets/soundfx/jumpsound.mp3')] private const JUMPSOUND:Class;
+		private var sfxJump:Sfx = new Sfx(JUMPSOUND);
+		[Embed(source = '../assets/soundfx/deathsound.mp3')] private const DEATHSOUND:Class;
+		private var sfxDeath:Sfx = new Sfx(DEATHSOUND);
+		[Embed(source = '../assets/soundfx/reversefinish.mp3')] private const REVERSEFINISH:Class;
+		private var sfxReverseFinish:Sfx = new Sfx(REVERSEFINISH);
 
 		// Dox sprites (for animation) and other variables for animation
-		[Embed(source = '../assets/dox.png')] private const DOX_ANIM:Class;
+		[Embed(source = '../assets/images/dox.png')] private const DOX_ANIM:Class;
 		protected var doxSprite:Spritemap = new Spritemap(DOX_ANIM, 26, 30);
 		private var flipped:Boolean = false; // default facing is right
 		
@@ -78,6 +87,7 @@ package
 				}
 							
 				if (rewindState == true) {
+					sfxReverseFinish.play();
 					//Set rewind state to false 
 					rewindState = false;
 					
@@ -120,6 +130,7 @@ package
 				onTheGround=true;
 				ySpeed=0;
 				if (Input.check(Key.UP)) {
+					sfxJump.play();
 					ySpeed-=jumpPower;
 				}
 			} else {
@@ -128,10 +139,11 @@ package
 			}
 			
 			//Entity Collisions
-			var bullet;
+			var bullet:Entity;
 			if (collide("spikes",x,y+1)) {
 				x=spawnX * 32;
-				y=spawnY * 32;
+				y = spawnY * 32;
+				sfxDeath.play();
 			} 
 			else if (collide("goal", x, y + 1)) {
 				x = 32;
@@ -142,11 +154,16 @@ package
 			else if ( bullet = collide("bullet", x, y+1))
 			{
 				x=spawnX * 32;
-				y=spawnY * 32;
+				y = spawnY * 32;
+				sfxDeath.play();
 				FP.world.remove(bullet);
 			}
 			if (Math.abs(xSpeed)<1&&! pressed) {
 				xSpeed=0;
+			}
+			else if (collide("switch", x, y + 1)) 
+			{
+				trace("You hit a switch");
 			}
 			xSpeed*=hFriction;
 			ySpeed*=vFriction;

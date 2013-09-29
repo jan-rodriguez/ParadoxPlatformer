@@ -5,7 +5,7 @@ package
 	
 	public class theWall extends Entity
 	{
-		[Embed(source='../assets/wall.jpg')] private const WALL:Class;
+		[Embed(source='../assets/images/wall.jpg')] private const WALL:Class;
 		
 		public function theWall(posX:int,posY:int)
 		{
