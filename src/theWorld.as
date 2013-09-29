@@ -18,7 +18,7 @@ package
 		
 		private var wg:WorldGenerator;
 		
-		[Embed(source = '../assets/music/epic_background.mp3')] private const LEVELMUSIC:Class;
+		[Embed(source = '../assets/music/snappy_lo.mp3')] private const LEVELMUSIC:Class;
 		private var sfxLevelMusic:Sfx = new Sfx(LEVELMUSIC); 
 		
 		public function theWorld()
