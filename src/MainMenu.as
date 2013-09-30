@@ -17,7 +17,7 @@ package {
 		public function MainMenu(first:Boolean = true) {
 			firstTime = first;
 			sfxBackground.loop();
-			var titleText:Text = new Text("Click to Start!");
+			var titleText:Text = new Text("Click to Start!\n\nMarcel Polanco\nJancarlo Perez\nJan Rodriguez\nNick Benson\nPhilip Seo");
 			var textEntity:Entity = new Entity(0,0,titleText);
 			textEntity.x = (FP.width/2)-(titleText.width/2);
 			textEntity.y = (FP.height/2)-(titleText.height/2);
