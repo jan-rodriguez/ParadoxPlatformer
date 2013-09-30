@@ -2,6 +2,7 @@ package
 {
 	import net.flashpunk.Entity;
 	import net.flashpunk.FP;
+	import net.flashpunk.graphics.Spritemap;
 	import net.flashpunk.World;
 	import net.flashpunk.graphics.Image;
 	
@@ -9,19 +10,28 @@ package
 	{
 		private var angle:int;
 		private var xSpeed:Number=0;
-		private var ySpeed:Number=0;
-		[Embed(source = '../assets/images/player.jpg')] private const BULLET:Class;
+		private var ySpeed:Number = 0;
+		
+		// Animated bullet sprites
+		[Embed(source = '../assets/images/bullet.png')] private const BULLET_ANIM:Class;
+		protected var bulletSprite:Spritemap = new Spritemap(BULLET_ANIM, 16, 16);
 		
 		public function Bullet( posX:int, posY:int, launchAngle:int = 0)
 		{
 			setHitbox(16,16);
-			graphic = new Image(BULLET);
 			x = posX;
 			y = posY;
 			type = "bullet";
 			
 			xSpeed = Math.round(5 * Math.cos( launchAngle * Math.PI / 180 ));
 			ySpeed = Math.round(5 * Math.sin( launchAngle * Math.PI / 180 ));
+			
+			// Animation code -Nick
+			bulletSprite = new Spritemap(BULLET_ANIM, 16, 16);
+			//bulletSprite.originX = 4;
+			//bulletSprite.originY = 6;
+			graphic = bulletSprite;
+			bulletSprite.add("default", [0, 1, 2, 3], 24);
 		}
 		override public function update():void {
 			adjustXPosition();
@@ -31,6 +41,7 @@ package
 			{
 				FP.world.remove(this);
 			}
+			bulletSprite.play("default");
 		}
 		
 		private function adjustXPosition():void {

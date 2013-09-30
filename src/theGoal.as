@@ -8,7 +8,7 @@ package
 	 */
 	public class theGoal extends Entity 
 	{
-		[Embed(source='../assets/images/greensquare.jpg')] private const GOAL:Class;
+		[Embed(source='../assets/images/goal.png')] private const GOAL:Class;
 		public function theGoal(posX:int, posY:int) 
 		{
 			graphic = new Image(GOAL);

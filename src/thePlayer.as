@@ -53,7 +53,6 @@ package
 		
 		public function thePlayer(xPos:int, yPos:int, currentWorld:World)
 		{
-			graphic = new Image(PLAYER);
 			setHitbox(16, 24);
 			x=32*xPos;
 			y = (32 *yPos);
