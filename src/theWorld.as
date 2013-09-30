@@ -1,12 +1,13 @@
 package 
 {
+	import flash.utils.ByteArray;
+	
 	import net.flashpunk.FP;
 	import net.flashpunk.graphics.Image;
 	import net.flashpunk.Sfx;
 	import net.flashpunk.World;
 	import net.flashpunk.utils.Input;
 	import net.flashpunk.utils.Key;
-	
 	
 	public class theWorld extends World
 	{
@@ -19,18 +20,19 @@ package
 		public static const UP_TURRET:int = 13;
 		public static const DOWN_TURRET:int = 14;
 		
-		
+		private var finalLevel:Boolean = false;
 		private var wg:WorldGenerator;
 		private var level:Array;
 		
 		[Embed(source = '../assets/music/snappy_lo.mp3')] private static const LEVELMUSIC:Class;
-		public static var sfxLevelMusic:Sfx = new Sfx(LEVELMUSIC);
+		public static var sfxLevelMusic:Sfx = new Sfx(LEVELMUSIC); 
 		
 		// Level background
 		[Embed(source='../assets/images/background.png')] private const BACKGROUND:Class;
 		
 		public function theWorld()
 		{
+			LevelStructure.levels = clone(LevelStructure.ALL_LEVELS);
 			wg = new WorldGenerator(0, 0);
 			sfxLevelMusic.loop();
 			createWorld();
@@ -38,8 +40,21 @@ package
 		private function createWorld():void
 		{
 			addGraphic(new Image(BACKGROUND), 2000, 0, 0);
-			level = wg.generateRandomLevel();
-			generateWorld(level);
+
+			if (finalLevel)
+			{
+				FP.world = new WinningScreen();
+			}
+			else if (LevelStructure.getNumLevels())
+			{
+				level = wg.generateRandomLevel();
+				generateWorld(level);
+			}
+			else
+			{
+				finalLevel = true;
+				generateWorld(LevelStructure.FINALLEVEL);
+			}
 		}
 		override public function update():void
 		{
@@ -111,6 +126,14 @@ package
 				}
 			}
 			add(new TimeBar());
+		}
+		
+		public function clone(source:Object):* 
+		{ 
+			var myBA:ByteArray = new ByteArray(); 
+			myBA.writeObject(source); 
+			myBA.position = 0; 
+			return(myBA.readObject()); 
 		}
 	}
 }
