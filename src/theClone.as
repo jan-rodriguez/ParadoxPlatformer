@@ -74,7 +74,7 @@ package
 				//TODO: Add velocities later
 				
 				//Remove rewindEntity from world
-				//myWorld.remove(path[0][2]);
+				myWorld.remove(path[0][5]);
 				
 				//Remove positions as clone moves
 				path.shift();

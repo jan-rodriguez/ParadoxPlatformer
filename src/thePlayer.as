@@ -26,7 +26,6 @@ package
 		private var spawnY:int = 0;
 		private var rewindState:Boolean = false;
 		
-		
 		private var power:Number=0.4;
 		private var jumpPower:Number=10;
 		private var hFriction:Number=0.85;
@@ -36,7 +35,6 @@ package
 		private var onTheGround:Boolean=false;
 		private var gravity:Number = 0.45;
 		private var myWorld:World;
-		[Embed(source = '../assets/images/player.jpg')] private const PLAYER:Class;
 		
 		//WAV files used for player movments
 		[Embed(source = '../assets/soundfx/jumpsound.mp3')] private const JUMPSOUND:Class;
@@ -130,21 +128,23 @@ package
 					time = 0;
 				}
 				rewindState = true;
-				//Add images to create visible path during time travel
-				//var pathEntity:theRewindEntity = new theRewindEntity(x, y);
-				//myWorld.add(pathEntity);
-				
 				//Move back to most recent position
-				if (playerPosition.length != 0){
+				if (playerPosition.length != 0) {
 					x = playerPosition[playerPosition.length - 1][xPosition];
 					y = playerPosition[playerPosition.length - 1][yPosition];
+					
+					// Reverse animations
 					currentAnim = playerPosition[playerPosition.length - 1][animPosition];
 					doxSprite.frame = playerPosition[playerPosition.length - 1][framePosition];
 					flipped = playerPosition[playerPosition.length - 1][flippedPosition];
-				
-				//Remove most recent position from array and add position and new rewindEntity to path
-				var position:Array = playerPosition.pop();
-				clonePath.unshift([position[xPosition], position[yPosition], position[animPosition], position[framePosition], position[flippedPosition]]);
+					
+					//Add images to create visible path during time travel
+					var pathEntity:theRewindEntity = new theRewindEntity(x, y);
+					myWorld.add(pathEntity);
+	
+					//Remove most recent position from array and add position and new rewindEntity to path
+					var position:Array = playerPosition.pop();
+					clonePath.unshift([position[xPosition], position[yPosition], position[animPosition], position[framePosition], position[flippedPosition], pathEntity]);
 				}
 			}
 			
@@ -188,13 +188,13 @@ package
 				trace("hit goal");
 				theWorld(myWorld).reset();
 			}
-			else if ( bullet = collide("bullet", x, y+1))
+			else if ( bullet == collide("bullet", x, y+1))
 			{
 				dieeeee();	
 				sfxDeath.play();
 				FP.world.remove(bullet);
 			}
-			else if (clone = collide("clone", x, y + 1) as theClone)
+			else if (clone == collide("clone", x, y + 1) as theClone)
 			{
 				
 				if (clone.getVelocity()[0] == 0 && clone.getVelocity()[1] == 0) 

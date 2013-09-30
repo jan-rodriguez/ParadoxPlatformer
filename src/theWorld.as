@@ -64,6 +64,13 @@ package
 			}
 			else
 			{
+				if (Input.check(Key.SHIFT)) {
+					sfxLevelMusic.volume = 0.2;
+				}
+				else {
+					sfxLevelMusic.volume = 1;
+				}
+				
 				super.update();
 			}
 		}

@@ -14,17 +14,19 @@ package
 	 */
 	public class theRewindEntity extends Entity
 	{
-		[Embed(source = '../assets/images/player.jpg')] private const REWIND:Class;
+		[Embed(source = '../assets/images/trailBlip.png')] private const REWIND:Class;
+		var blipImage:Image = new Image(REWIND);
 		public function theRewindEntity(xPosition:int , yPosition:int) 
 		{
-			graphic = new Image(REWIND);
+			graphic = blipImage;
 			x = xPosition;
 			y = yPosition;
+			layer = 1500;
 		}
 		
 		override public function update():void
 		{
-			
+			blipImage.alpha -= 0.01;
 		}
 		
 	}
