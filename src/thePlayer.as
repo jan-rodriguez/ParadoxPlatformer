@@ -188,16 +188,16 @@ package
 				trace("hit goal");
 				theWorld(myWorld).reset();
 			}
-			else if ( bullet == collide("bullet", x, y+1))
+			else if (bullet = collide("bullet", x, y+1)) // Funny story: If you replace the = with ==, THE GAME CRASHES ON STARTUP.
 			{
 				dieeeee();	
 				sfxDeath.play();
 				FP.world.remove(bullet);
 			}
-			else if (clone == collide("clone", x, y + 1) as theClone)
+			else if (clone = collide("clone", x, y + 1) as theClone) // Funny story: If you replace the = with ==, THE GAME CRASHES ON STARTUP.
 			{
 				
-				if (clone.getVelocity()[0] == 0 && clone.getVelocity()[1] == 0) 
+				if (clone.getVelocity()[0] == 0 && clone.getVelocity()[1] == 0)
 				{
 					onTheGround = true; 
 					ySpeed = 0;
