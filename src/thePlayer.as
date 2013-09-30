@@ -128,14 +128,14 @@ package
 					time = 0;
 				}
 				rewindState = true;
-				//Add images to create visible path during time travel
-				var pathEntity:theRewindEntity = new theRewindEntity(x, y);
-				//myWorld.add(pathEntity);
-				
 				//Move back to most recent position
 				if (playerPosition.length != 0){
 					x = playerPosition[playerPosition.length - 1][xPosition];
 					y = playerPosition[playerPosition.length - 1][yPosition];
+					
+					//Add images to create visible path during time travel
+					var pathEntity:theRewindEntity = new theRewindEntity(x, y);
+					myWorld.add(pathEntity);
 				
 				//Remove most recent position from array and add position and new rewindEntity to path
 				var position:Array = playerPosition.pop();
