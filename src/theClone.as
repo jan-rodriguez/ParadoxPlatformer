@@ -22,11 +22,14 @@ package
 		private var ySpeed:Number=0;
 		private var onTheGround:Boolean=false;
 		private var gravity:Number = 0.45;
-		private var myWorld:World;		
+		private var myWorld:World;
+		
 		// Dox sprites (for animation) and other variables for animation
-		[Embed(source = '../assets/images/doxClone.png')] private const CLONE_ANIM:Class;
+		[Embed(source = '../assets/images/doxCloneGray.png')] private const CLONE_ANIM:Class;
 		protected var cloneSprite:Spritemap = new Spritemap(CLONE_ANIM, 26, 30);
 		private var flipped:Boolean = false; // default facing is right
+		protected var currentAnim:String = "idle"; // Used to make sure clones display properly
+		protected var currentFrame:int = 0;
 		
 		public static var numClones:int = 0;
 		
@@ -47,9 +50,6 @@ package
 			cloneSprite = new Spritemap(CLONE_ANIM, 26, 30);
 			cloneSprite.originX = 4;
 			cloneSprite.originY = 6;
-			cloneSprite.color = 0xFFFFFF;
-			cloneSprite.tintMode = Image.TINTING_COLORIZE;
-			cloneSprite.tinting = 0.05 * numClones;
 			graphic = cloneSprite;
 			cloneSprite.add("idle", [0], 24);
 			cloneSprite.add("jumping", [1], 24);
@@ -62,17 +62,25 @@ package
 			var pressed:Boolean = false;
 			// For now, just have clone trace each position in the clonePath
 			
+			trace("NFJSKDNKJFSNDJKFS");
+			
 			if (path.length != 0) {
-				x = path[0][0]
-				y = path[0][1]
+				x = path[0][0];
+				y = path[0][1];
+				currentAnim = path[0][2];
+				currentFrame = path[0][3];
+				flipped = path[0][4];
 				
 				//TODO: Add velocities later
 				
 				//Remove rewindEntity from world
-				myWorld.remove(path[0][2]);
+				//myWorld.remove(path[0][2]);
 				
 				//Remove positions as clone moves
 				path.shift();
+			}
+			else {
+				
 			}
 			
 			if (collide("wall", x, y + 1)) {
@@ -104,11 +112,9 @@ package
 			
 			// Animation code -Nick
 			cloneSprite.flipped = flipped;
-			if (!onTheGround) {
-				cloneSprite.play("jumping");
-			}
-			else if (xSpeed > 1) {
-				cloneSprite.play("running");
+			if (path.length != 0) {
+				cloneSprite.play(currentAnim);
+				cloneSprite.frame = currentFrame;
 			}
 			else {
 				cloneSprite.play("idle");
