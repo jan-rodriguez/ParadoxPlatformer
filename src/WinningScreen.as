@@ -32,6 +32,7 @@ package {
 		override public function update():void {
 			if (Input.mouseReleased) {
 				sfxBackground.stop();
+				theWorld.sfxLevelMusic.stop();
 				FP.screen.color = 0x222233;
 				FP.world=new MainMenu();	
 			}
